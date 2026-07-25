@@ -1,1 +1,90 @@
-<p>popular-services works!</p>
+<section class="popular-services" aria-labelledby="popular-services-heading">
+  <div class="popular-services__inner">
+    <div class="popular-services__heading-row">
+      <h2 id="popular-services-heading">Popular services</h2>
+
+      <a routerLink="/services" class="popular-services__all-link">
+        View all services
+      </a>
+    </div>
+
+    <div class="popular-services__list">
+      @for (service of services; track service.title) {
+        <a [routerLink]="service.link" class="service-link">
+          <span class="service-link__icon" aria-hidden="true">
+            @switch (service.icon) {
+              @case ('recreation') {
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8"></circle>
+                  <path d="M4.5 10h15"></path>
+                  <path d="M7 5.5c3 2 4 5 4 13"></path>
+                  <path d="M17 5.5c-3 2-4 5-4 13"></path>
+                </svg>
+              }
+
+              @case ('waste') {
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 7h16"></path>
+                  <path d="M9 3h6l1 4H8l1-4Z"></path>
+                  <path d="m6 7 1 14h10l1-14"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                </svg>
+              }
+
+              @case ('transit') {
+                <svg viewBox="0 0 24 24">
+                  <rect x="5" y="3" width="14" height="16" rx="2"></rect>
+                  <path d="M5 11h14"></path>
+                  <path d="M8 7h8"></path>
+                  <circle cx="8.5" cy="15" r="1"></circle>
+                  <circle cx="15.5" cy="15" r="1"></circle>
+                  <path d="M8 19v2"></path>
+                  <path d="M16 19v2"></path>
+                </svg>
+              }
+
+              @case ('property') {
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 11.5 12 4l9 7.5"></path>
+                  <path d="M5.5 10v10h13V10"></path>
+                  <path d="M9.5 20v-6h5v6"></path>
+                </svg>
+              }
+
+              @case ('roads') {
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 3 6 21"></path>
+                  <path d="m15 3 3 18"></path>
+                  <path d="M12 4v4"></path>
+                  <path d="M12 11v4"></path>
+                  <path d="M12 18v2"></path>
+                </svg>
+              }
+
+              @case ('calendar') {
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="5" width="16" height="15" rx="1"></rect>
+                  <path d="M8 3v4"></path>
+                  <path d="M16 3v4"></path>
+                  <path d="M4 9h16"></path>
+                  <path d="M8 13h3"></path>
+                  <path d="M13 13h3"></path>
+                  <path d="M8 16h3"></path>
+                </svg>
+              }
+            }
+          </span>
+
+          <span class="service-link__title">
+            {{ service.title }}
+          </span>
+
+          <span class="service-link__arrow" aria-hidden="true">
+            ›
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+</section>

@@ -1,1 +1,87 @@
-<p>news-section works!</p>
+<section class="news-section" aria-labelledby="news-heading">
+  <div class="news-section__inner">
+    <header class="news-section__header">
+      <div>
+        <p class="news-section__label">News and updates</p>
+        <h2 id="news-heading">Latest news</h2>
+      </div>
+
+      <a routerLink="/news" class="news-section__all-link">
+        View all news
+      </a>
+    </header>
+
+    <div class="news-section__content">
+      <div class="news-cards">
+        @for (article of featuredNews; track article.id) {
+          <article class="news-card">
+            <a
+              [routerLink]="article.link"
+              class="news-card__image-link"
+              [attr.aria-label]="'Read ' + article.title"
+            >
+              <img
+                class="news-card__image"
+                [src]="article.imageUrl"
+                [alt]="article.imageAlt ?? ''"
+              />
+            </a>
+
+            <div class="news-card__content">
+              <time
+                class="news-card__date"
+                [attr.datetime]="article.publishedAt"
+              >
+                {{ article.publishedAt | date: 'MMMM d, y' }}
+              </time>
+
+              <h3 class="news-card__title">
+                <a [routerLink]="article.link">
+                  {{ article.title }}
+                </a>
+              </h3>
+
+              <p class="news-card__description">
+                {{ article.description }}
+              </p>
+
+              <a [routerLink]="article.link" class="news-card__link">
+                Read more
+                <span aria-hidden="true">›</span>
+              </a>
+            </div>
+          </article>
+        }
+      </div>
+
+      <aside class="news-list" aria-labelledby="more-news-heading">
+        <h3 id="more-news-heading" class="news-list__heading">
+          More news
+        </h3>
+
+        <div class="news-list__items">
+          @for (article of latestNews; track article.id) {
+            <article class="news-list-item">
+              <time
+                class="news-list-item__date"
+                [attr.datetime]="article.publishedAt"
+              >
+                {{ article.publishedAt | date: 'MMMM d, y' }}
+              </time>
+
+              <h4 class="news-list-item__title">
+                <a [routerLink]="article.link">
+                  {{ article.title }}
+                </a>
+              </h4>
+
+              <p class="news-list-item__description">
+                {{ article.description }}
+              </p>
+            </article>
+          }
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
