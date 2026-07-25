@@ -76,69 +76,24 @@
           />
         </div>
       }
+<div class="article__layout">
+  <div class="article__main">
+    <div
+      class="article__body"
+      [innerHTML]="currentArticle.content"
+    ></div>
 
-      <div class="article__layout">
-        <div class="article__main">
-          <div
-            class="article__body"
-            [innerHTML]="currentArticle.content"
-          ></div>
-
-          <div class="article__actions">
-            <button
-              type="button"
-              class="article__print-button"
-              (click)="printArticle()"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 8V3h10v5"></path>
-                <rect x="6" y="14" width="12" height="7"></rect>
-                <path d="M6 17H4V9h16v8h-2"></path>
-                <path d="M17 11h.01"></path>
-              </svg>
-
-              Print this page
-            </button>
-          </div>
-        </div>
-
-        <aside class="article-sidebar" aria-labelledby="related-news-heading">
-          <h2 id="related-news-heading">Related news</h2>
-
-          @if (relatedArticles().length > 0) {
-            <div class="related-news">
-              @for (
-                relatedArticle of relatedArticles();
-                track relatedArticle.id
-              ) {
-                <article class="related-news__item">
-                  <time [attr.datetime]="relatedArticle.publishedAt">
-                    {{ relatedArticle.publishedAt | date: 'MMMM d, y' }}
-                  </time>
-
-                  <h3>
-                    <a
-                      [routerLink]="[
-                        '/city-hall/news',
-                        relatedArticle.slug
-                      ]"
-                    >
-                      {{ relatedArticle.title }}
-                    </a>
-                  </h3>
-                </article>
-              }
-            </div>
-          }
-
-          <a
-            routerLink="/city-hall/news"
-            class="article-sidebar__all-link"
-          >
-            View all news
-          </a>
-        </aside>
-      </div>
+    <div class="article__actions">
+      <button
+        type="button"
+        class="article__print-button"
+        (click)="printArticle()"
+      >
+        Print this page
+      </button>
+    </div>
+  </div>
+</div>
 
       <footer class="article__footer">
         <div class="article__footer-inner">

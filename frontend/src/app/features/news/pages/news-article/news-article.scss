@@ -350,11 +350,12 @@ button:focus-visible {
     display: none !important;
   }
 
-  .article__layout {
-    display: block;
-    width: 100%;
-    padding: 1rem 0;
-  }
+.article__layout {
+  display: block;
+  max-width: 780px;
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
 
   .article__header-inner,
   .article__image-container {
