@@ -1,12 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
-@Controller()
+import { AppService, HomePage, Post } from './app.service';
+
+@Controller('api')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('posts')
+  getPosts(): Promise<Post[]> {
+    return this.appService.getPosts();
+  }
+  @Get('pages/home')
+  getHomePage(): Promise<HomePage> {
+    return this.appService.getHomePage();
   }
 }

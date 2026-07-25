@@ -1,4 +1,21 @@
-<app-hero-section />
+@if (isLoading()) {
+  <p>Loading homepage...</p>
+} @else if (errorMessage()) {
+  <p>{{ errorMessage() }}</p>
+} @else if (homePage(); as page) {
+  <app-hero-section
+    [title]="page.heroTitle"
+    [description]="page.heroDescription"
+    [imageUrl]="page.heroImageUrl"
+    [imageAlt]="page.heroImageAlt"
+    [buttonText]="page.heroButtonText"
+    [buttonUrl]="page.heroButtonUrl"
+  />
+    @if (page.content) {
+    <section class="home-page-content">
+      <div [innerHTML]="page.content"></div>
+    </section>
+  }
 
 <app-popular-services />
 
@@ -13,3 +30,4 @@
 <app-parks-recreation />
 
 <app-about-melrose />
+}

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { MainLayout } from './core/layout/main-layout/main-layout';
+import { Recreation } from './features/parks-community/pages/recreation/recreation';
 
 const informationPage = () =>
   import('./shared/pages/information-page/information-page').then(
@@ -281,29 +282,30 @@ export const routes: Routes = [
       {
         path: 'parks-community/recreation',
         title: 'Recreation | CityConnect',
-        loadComponent: informationPage,
-        data: {
-          page: {
-            category: 'Parks & Community',
-            title: 'Recreation',
-            description:
-              'Discover recreation programs, facilities, classes, and registration options.',
-            links: [
-              {
-                label: 'Program registration',
-                route: '/parks-community/recreation/program-registration',
-              },
-              {
-                label: 'Recreation centres',
-                route: '/parks-community/recreation/recreation-centres',
-              },
-              {
-                label: 'Pools and arenas',
-                route: '/parks-community/recreation/pools-and-arenas',
-              },
-            ],
-          },
-        },
+        component: Recreation,
+        // loadComponent: informationPage,
+        // data: {
+        //   page: {
+        //     category: 'Parks & Community',
+        //     title: 'Recreation',
+        //     description:
+        //       'Discover recreation programs, facilities, classes, and registration options.',
+        //     links: [
+        //       {
+        //         label: 'Program registration',
+        //         route: '/parks-community/recreation/program-registration',
+        //       },
+        //       {
+        //         label: 'Recreation centres',
+        //         route: '/parks-community/recreation/recreation-centres',
+        //       },
+        //       {
+        //         label: 'Pools and arenas',
+        //         route: '/parks-community/recreation/pools-and-arenas',
+        //       },
+        //     ],
+        //   },
+        // },
       },
       {
         path: 'parks-community/parks-and-trails',
