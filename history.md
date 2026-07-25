@@ -35,3 +35,5 @@ Before 1822 – Indigenous peoples know the area as Maskwâ Sîpiy ("Bear River"
 1830 – Trading post rebuilt and renamed Fort Melrose, after Melrose, Scotland.
 1896 – Incorporated as the Town of Melrose.
 1912 – Becomes the City of Melrose.
+
+city in augusta

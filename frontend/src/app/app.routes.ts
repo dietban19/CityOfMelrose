@@ -441,10 +441,18 @@ export const routes: Routes = [
                 label: 'Service changes',
                 route: '/city-hall/news/service-changes',
               },
+    
             ],
           },
         },
       },
+                {
+                path: 'city-hall/news/:slug',
+                loadComponent: () =>
+                    import(
+                    './features/news/pages/news-article/news-article'
+                    ).then((component) => component.NewsArticlePage),
+                },
       {
         path: 'city-hall/projects',
         title: 'Projects | CityConnect',

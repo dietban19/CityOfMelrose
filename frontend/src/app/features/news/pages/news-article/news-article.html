@@ -1,0 +1,155 @@
+@if (isLoading()) {
+  <main class="article-status">
+    <div class="article-status__inner">
+      <p>Loading article...</p>
+    </div>
+  </main>
+} @else if (errorMessage()) {
+  <main class="article-status">
+    <div class="article-status__inner">
+      <h1>Article unavailable</h1>
+
+      <p>{{ errorMessage() }}</p>
+
+      <a routerLink="/city-hall/news" class="button-link">
+        Return to news
+      </a>
+    </div>
+  </main>
+} @else if (article(); as currentArticle) {
+  <main class="news-article">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <div class="breadcrumbs__inner">
+        <ol>
+          <li>
+            <a routerLink="/">Home</a>
+          </li>
+
+          <li>
+            <a routerLink="/city-hall">City Hall</a>
+          </li>
+
+          <li>
+            <a routerLink="/city-hall/news">News</a>
+          </li>
+
+          <li aria-current="page">
+            {{ currentArticle.title }}
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <article class="article">
+      <header class="article__header">
+        <div class="article__header-inner">
+          <p class="article__category">
+            {{ currentArticle.category }}
+          </p>
+
+          <h1>{{ currentArticle.title }}</h1>
+
+          <p class="article__description">
+            {{ currentArticle.description }}
+          </p>
+
+          <div class="article__metadata">
+            <time [attr.datetime]="currentArticle.publishedAt">
+              Published
+              {{ currentArticle.publishedAt | date: 'MMMM d, y' }}
+            </time>
+
+            @if (currentArticle.author) {
+              <span aria-hidden="true">|</span>
+              <span>{{ currentArticle.author }}</span>
+            }
+          </div>
+        </div>
+      </header>
+
+      @if (currentArticle.imageUrl) {
+        <div class="article__image-container">
+          <img
+            class="article__image"
+            [src]="currentArticle.imageUrl"
+            [alt]="currentArticle.imageAlt"
+          />
+        </div>
+      }
+
+      <div class="article__layout">
+        <div class="article__main">
+          <div
+            class="article__body"
+            [innerHTML]="currentArticle.content"
+          ></div>
+
+          <div class="article__actions">
+            <button
+              type="button"
+              class="article__print-button"
+              (click)="printArticle()"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 8V3h10v5"></path>
+                <rect x="6" y="14" width="12" height="7"></rect>
+                <path d="M6 17H4V9h16v8h-2"></path>
+                <path d="M17 11h.01"></path>
+              </svg>
+
+              Print this page
+            </button>
+          </div>
+        </div>
+
+        <aside class="article-sidebar" aria-labelledby="related-news-heading">
+          <h2 id="related-news-heading">Related news</h2>
+
+          @if (relatedArticles().length > 0) {
+            <div class="related-news">
+              @for (
+                relatedArticle of relatedArticles();
+                track relatedArticle.id
+              ) {
+                <article class="related-news__item">
+                  <time [attr.datetime]="relatedArticle.publishedAt">
+                    {{ relatedArticle.publishedAt | date: 'MMMM d, y' }}
+                  </time>
+
+                  <h3>
+                    <a
+                      [routerLink]="[
+                        '/city-hall/news',
+                        relatedArticle.slug
+                      ]"
+                    >
+                      {{ relatedArticle.title }}
+                    </a>
+                  </h3>
+                </article>
+              }
+            </div>
+          }
+
+          <a
+            routerLink="/city-hall/news"
+            class="article-sidebar__all-link"
+          >
+            View all news
+          </a>
+        </aside>
+      </div>
+
+      <footer class="article__footer">
+        <div class="article__footer-inner">
+          <h2>Was this page helpful?</h2>
+
+          <div class="article__feedback-buttons">
+            <button type="button">Yes</button>
+            <button type="button">No</button>
+          </div>
+        </div>
+      </footer>
+    </article>
+  </main>
+}
