@@ -1,0 +1,81 @@
+<section class="page-header">
+  <div class="page-header__content">
+    <p class="eyebrow">Parks & Community</p>
+
+    <h1>Recreation</h1>
+
+    <p class="intro">
+      Explore recreation programs, facilities, activities, and registration
+      options available throughout Melrose.
+    </p>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container">
+    <h2>Popular recreation services</h2>
+
+    <div class="service-grid">
+      <a
+        class="service-card"
+        routerLink="/parks-community/program-registration"
+      >
+        <h3>Program registration</h3>
+        <p>Register for recreation programs and activities.</p>
+      </a>
+
+      <a
+        class="service-card"
+        routerLink="/parks-community/recreation-centres"
+      >
+        <h3>Recreation centres</h3>
+        <p>Find locations, hours, and available facilities.</p>
+      </a>
+
+      <a
+        class="service-card"
+        routerLink="/parks-community/pools-and-arenas"
+      >
+        <h3>Pools and arenas</h3>
+        <p>View public swimming, skating, and facility information.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="page-section page-section--muted">
+  <div class="container">
+    <h2>Featured programs</h2>
+
+    <div class="program-list">
+      @for (program of programs; track program.name) {
+        <article class="program-card">
+          <div>
+            <h3>{{ program.name }}</h3>
+            <p>{{ program.description }}</p>
+          </div>
+
+          <a [routerLink]="program.route">
+            View programs
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="page-section">
+  <div class="container contact-section">
+    <div>
+      <h2>Need help finding a program?</h2>
+
+      <p>
+        Contact the City of Melrose recreation team for assistance.
+      </p>
+    </div>
+
+    <a class="primary-button" routerLink="/contact">
+      Contact recreation
+    </a>
+  </div>
+</section>

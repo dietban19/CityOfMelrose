@@ -1,0 +1,39 @@
+<header class="site-header">
+  <a routerLink="/" class="logo">
+    CityConnect
+  </a>
+
+  <nav class="main-navigation" aria-label="Main navigation">
+    @for (group of navigationGroups; track group.title) {
+      <div class="nav-group">
+        <button
+          type="button"
+          class="nav-trigger"
+          [class.active]="openMenu() === group.title"
+          [attr.aria-expanded]="openMenu() === group.title"
+          (click)="toggleMenu(group.title)"
+        >
+          {{ group.title }}
+
+          <span class="arrow" aria-hidden="true">
+            {{ openMenu() === group.title ? '▲' : '▼' }}
+          </span>
+        </button>
+
+        @if (openMenu() === group.title) {
+          <div class="dropdown">
+            @for (item of group.items; track item.route) {
+              <a
+                [routerLink]="item.route"
+                routerLinkActive="active-link"
+                (click)="closeMenu()"
+              >
+                {{ item.label }}
+              </a>
+            }
+          </div>
+        }
+      </div>
+    }
+  </nav>
+</header>

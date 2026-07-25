@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Angular
+frontend/.angular/
+frontend/dist/
+
+# NestJS
+backend/dist/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store

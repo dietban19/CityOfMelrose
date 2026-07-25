@@ -1,0 +1,31 @@
+<section class="page-hero">
+  <div class="container">
+    <p class="category">{{ page().category }}</p>
+
+    <h1>{{ page().title }}</h1>
+
+    <p class="description">
+      {{ page().description }}
+    </p>
+  </div>
+</section>
+
+<section class="page-content">
+  <div class="container">
+    <h2>Services and information</h2>
+
+    <div class="link-grid">
+      @for (item of page().links; track item.route) {
+        <a class="link-card" [routerLink]="item.route">
+          <h3>{{ item.label }}</h3>
+
+          @if (item.description) {
+            <p>{{ item.description }}</p>
+          }
+
+          <span>View information</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
