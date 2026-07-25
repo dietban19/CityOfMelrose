@@ -1,13 +1,16 @@
-export interface NewsArticle {
+export interface NewsSummary {
   id: number;
   slug: string;
   title: string;
   description: string;
-  content: string;
   publishedAt: string;
-  updatedAt?: string;
   imageUrl: string | null;
   imageAlt: string;
   category: string;
-  author?: string;
+}
+
+export interface NewsArticle extends NewsSummary {
+  updatedAt: string;
+  content: string;
+  author: string;
 }

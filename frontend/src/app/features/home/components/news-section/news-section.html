@@ -6,82 +6,128 @@
         <h2 id="news-heading">Latest news</h2>
       </div>
 
-      <a routerLink="/news" class="news-section__all-link">
+      <a routerLink="/city-hall/news" class="news-section__all-link">
         View all news
       </a>
     </header>
 
-    <div class="news-section__content">
-      <div class="news-cards">
-        @for (article of featuredNews; track article.id) {
-          <article class="news-card">
-            <a
-              [routerLink]="article.link"
-              class="news-card__image-link"
-              [attr.aria-label]="'Read ' + article.title"
-            >
-              <img
-                class="news-card__image"
-                [src]="article.imageUrl"
-                [alt]="article.imageAlt ?? ''"
-              />
-            </a>
-
-            <div class="news-card__content">
-              <time
-                class="news-card__date"
-                [attr.datetime]="article.publishedAt"
+    @if (isLoading()) {
+      <p class="news-section__status">Loading news...</p>
+    } @else if (errorMessage()) {
+      <p class="news-section__status news-section__status--error">
+        {{ errorMessage() }}
+      </p>
+    } @else if (
+      featuredNews().length === 0 &&
+      latestNews().length === 0
+    ) {
+      <p class="news-section__status">
+        There are currently no news articles.
+      </p>
+    } @else {
+      <div class="news-section__content">
+        <div class="news-cards">
+          @for (article of featuredNews(); track article.id) {
+            <article class="news-card">
+              <a
+                [routerLink]="[
+                  '/city-hall/news',
+                  article.slug
+                ]"
+                class="news-card__image-link"
+                [attr.aria-label]="'Read ' + article.title"
               >
-                {{ article.publishedAt | date: 'MMMM d, y' }}
-              </time>
-
-              <h3 class="news-card__title">
-                <a [routerLink]="article.link">
-                  {{ article.title }}
-                </a>
-              </h3>
-
-              <p class="news-card__description">
-                {{ article.description }}
-              </p>
-
-              <a [routerLink]="article.link" class="news-card__link">
-                Read more
-                <span aria-hidden="true">›</span>
+                @if (article.imageUrl) {
+                  <img
+                    class="news-card__image"
+                    [src]="article.imageUrl"
+                    [alt]="article.imageAlt"
+                  />
+                } @else {
+                  <div
+                    class="news-card__image-placeholder"
+                    aria-hidden="true"
+                  >
+                    City of Melrose
+                  </div>
+                }
               </a>
-            </div>
-          </article>
-        }
-      </div>
 
-      <aside class="news-list" aria-labelledby="more-news-heading">
-        <h3 id="more-news-heading" class="news-list__heading">
-          More news
-        </h3>
+              <div class="news-card__content">
+                <time
+                  class="news-card__date"
+                  [attr.datetime]="article.publishedAt"
+                >
+                  {{ article.publishedAt | date: 'MMMM d, y' }}
+                </time>
 
-        <div class="news-list__items">
-          @for (article of latestNews; track article.id) {
-            <article class="news-list-item">
-              <time
-                class="news-list-item__date"
-                [attr.datetime]="article.publishedAt"
-              >
-                {{ article.publishedAt | date: 'MMMM d, y' }}
-              </time>
+                <h3 class="news-card__title">
+                  <a
+                    [routerLink]="[
+                      '/city-hall/news',
+                      article.slug
+                    ]"
+                  >
+                    {{ article.title }}
+                  </a>
+                </h3>
 
-              <h4 class="news-list-item__title">
-                <a [routerLink]="article.link">
-                  {{ article.title }}
+                <p class="news-card__description">
+                  {{ article.description }}
+                </p>
+
+                <a
+                  [routerLink]="[
+                    '/city-hall/news',
+                    article.slug
+                  ]"
+                  class="news-card__link"
+                >
+                  Read more
+                  <span aria-hidden="true">›</span>
                 </a>
-              </h4>
-
-              <p class="news-list-item__description">
-                {{ article.description }}
-              </p>
+              </div>
             </article>
           }
         </div>
-      </aside>
-    </div>
+
+        <aside
+          class="news-list"
+          aria-labelledby="more-news-heading"
+        >
+          <h3 id="more-news-heading" class="news-list__heading">
+            More news
+          </h3>
+
+          <div class="news-list__items">
+            @for (article of latestNews(); track article.id) {
+              <article class="news-list-item">
+                <time
+                  class="news-list-item__date"
+                  [attr.datetime]="article.publishedAt"
+                >
+                  {{ article.publishedAt | date: 'MMMM d, y' }}
+                </time>
+
+                <h4 class="news-list-item__title">
+                  <a
+                    [routerLink]="[
+                      '/city-hall/news',
+                      article.slug
+                    ]"
+                  >
+                    {{ article.title }}
+                  </a>
+                </h4>
+
+                <p class="news-list-item__description">
+                  {{ article.description }}
+                </p>
+              </article>
+            }
+          </div>
+        </aside>
+      </div>
+    }
   </div>
 </section>
