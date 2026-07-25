@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="220 55 560 620" style="display: block; margin: 0 auto; max-width: 100%;" role="img" aria-labelledby="title desc">
+  <title id="title">Melrose city logo</title>
+  <desc id="desc">A compact blue and green geometric M symbol above the word MELROSE, with a transparent background.</desc>
+  <g id="symbol">
+    <path fill="#0B66A3" d="M250 60 L490 245 L490 390 C430 335 370 315 250 335 Z"/>
+    <path fill="#0B66A3" d="M250 365 C365 335 410 375 465 435 C510 485 565 500 620 545 L250 545 Z"/>
+    <path fill="#4E8F43" d="M510 245 L750 60 L750 335 C630 315 570 335 510 390 Z"/>
+    <path fill="#4E8F43" d="M535 435 C590 375 635 335 750 365 L750 545 C690 500 640 485 580 465 C560 458 545 448 535 435 Z"/>
+  </g>
+  <text x="500" y="655" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="86" font-weight="500" letter-spacing="18" fill="#0B66A3">MELROSE</text>
+</svg>

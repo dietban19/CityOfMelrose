@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { AsyncPipe, DatePipe } from '@angular/common';
 
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { PostsService } from '../../../../services/posts.service';
+import { catchError, of,tap } from 'rxjs';
 interface RecreationProgram {
   name: string;
   description: string;
   route: string;
 }
 
-@Component({
-  selector: 'app-recreation',
-  imports: [RouterLink],
-  templateUrl: './recreation.html',
-  styleUrl: './recreation.scss',
-})
+  @Component({
+    selector: 'app-recreation',
+    imports: [RouterLink],
+    templateUrl: './recreation.html',
+    styleUrl: './recreation.scss',
+  })
+
 export class Recreation {
+
   programs: RecreationProgram[] = [
     {
       name: 'Swimming lessons',
