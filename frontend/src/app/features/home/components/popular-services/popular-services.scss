@@ -1,0 +1,143 @@
+:host {
+  display: block;
+}
+
+.popular-services {
+  padding: 3rem 1.5rem 3.5rem;
+  background: #f2f3f3;
+}
+
+.popular-services__inner {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.popular-services__heading-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  position: relative;
+  margin: 0;
+  padding-bottom: 0.75rem;
+  color: #263943;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 4rem;
+  height: 4px;
+  background: #4e8f43;
+  content: '';
+}
+
+.popular-services__all-link {
+  color: #0b66a3;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.popular-services__all-link:hover {
+  color: #084b78;
+}
+
+.popular-services__all-link:focus-visible,
+.service-link:focus-visible {
+  outline: 3px solid #f5b400;
+  outline-offset: 3px;
+}
+
+.popular-services__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid #c8ced1;
+  border-left: 1px solid #c8ced1;
+  background: #ffffff;
+}
+
+.service-link {
+  display: grid;
+  min-height: 7rem;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-right: 1px solid #c8ced1;
+  border-bottom: 1px solid #c8ced1;
+  color: #0b66a3;
+  text-decoration: none;
+}
+
+.service-link:hover {
+  background: #edf4f8;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.service-link__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4e8f43;
+}
+
+.service-link__icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.service-link__title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.service-link__arrow {
+  color: #0b66a3;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+@media (max-width: 850px) {
+  .popular-services__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .popular-services {
+    padding: 2.5rem 1rem 3rem;
+  }
+
+  .popular-services__heading-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .popular-services__list {
+    grid-template-columns: 1fr;
+  }
+
+  .service-link {
+    min-height: 5.5rem;
+    padding: 1rem;
+  }
+}
