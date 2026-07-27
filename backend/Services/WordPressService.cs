@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 using backend.Models;
 
@@ -7,18 +9,44 @@ namespace backend.Services;
 
 public sealed class WordPressService
 {
-    private const string WordPressApiUrl =
-        "http://melrose.local/wp-json/wp/v2";
-
     private readonly HttpClient _httpClient;
     private readonly ILogger<WordPressService> _logger;
+    private readonly string _wordpressApiUrl;
 
     public WordPressService(
         HttpClient httpClient,
+        IConfiguration configuration,
         ILogger<WordPressService> logger)
     {
         _httpClient = httpClient;
         _logger = logger;
+
+        _wordpressApiUrl =
+            configuration["WordPress:BaseUrl"]
+            ?? throw new InvalidOperationException(
+                "WordPress:BaseUrl is not configured."
+            );
+
+        var username = configuration["WordPress:Username"];
+        var password = configuration["WordPress:Password"];
+
+        if (
+            !string.IsNullOrWhiteSpace(username) &&
+            !string.IsNullOrWhiteSpace(password)
+        )
+        {
+            var credentials = Convert.ToBase64String(
+                Encoding.UTF8.GetBytes(
+                    $"{username}:{password}"
+                )
+            );
+
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(
+                    "Basic",
+                    credentials
+                );
+        }
     }
 
     /// <summary>
@@ -30,8 +58,8 @@ public sealed class WordPressService
     {
         try
         {
-            const string requestUrl =
-                $"{WordPressApiUrl}/posts" +
+            var requestUrl =
+                $"{_wordpressApiUrl}/posts" +
                 "?_embed=true" +
                 "&per_page=10" +
                 "&order=desc" +
@@ -61,6 +89,15 @@ public sealed class WordPressService
 
             throw;
         }
+        catch (NotSupportedException exception)
+        {
+            _logger.LogError(
+                exception,
+                "WordPress returned an unsupported response format."
+            );
+
+            throw;
+        }
     }
 
     /// <summary>
@@ -75,7 +112,7 @@ public sealed class WordPressService
             var encodedSlug = Uri.EscapeDataString(slug);
 
             var requestUrl =
-                $"{WordPressApiUrl}/posts" +
+                $"{_wordpressApiUrl}/posts" +
                 $"?slug={encodedSlug}" +
                 "&_embed=true";
 
@@ -101,6 +138,16 @@ public sealed class WordPressService
 
             throw;
         }
+        catch (NotSupportedException exception)
+        {
+            _logger.LogError(
+                exception,
+                "WordPress returned an unsupported response for post {Slug}.",
+                slug
+            );
+
+            throw;
+        }
     }
 
     /// <summary>
@@ -111,8 +158,8 @@ public sealed class WordPressService
     {
         try
         {
-            const string requestUrl =
-                $"{WordPressApiUrl}/pages" +
+            var requestUrl =
+                $"{_wordpressApiUrl}/pages" +
                 "?slug=home" +
                 "&_embed=true";
 
@@ -140,37 +187,59 @@ public sealed class WordPressService
             }
 
             var embeddedImage =
-                page.Embedded?.FeaturedMedia?.FirstOrDefault();
+                page.Embedded?
+                    .FeaturedMedia?
+                    .FirstOrDefault();
+
+            var pageTitle =
+                DecodeHtml(page.Title.Rendered);
 
             return new HomePage
             {
                 Id = page.Id,
                 Slug = page.Slug,
-                Title = DecodeHtml(page.Title.Rendered),
+                Title = pageTitle,
                 Content = page.Content.Rendered,
 
                 HeroTitle =
-                    string.IsNullOrWhiteSpace(page.Acf?.HeroTitle)
-                        ? DecodeHtml(page.Title.Rendered)
-                        : page.Acf.HeroTitle,
+                    string.IsNullOrWhiteSpace(
+                        page.Acf?.HeroTitle
+                    )
+                        ? pageTitle
+                        : DecodeHtml(
+                            page.Acf.HeroTitle
+                        ),
 
                 HeroDescription =
-                    page.Acf?.HeroDescription ?? string.Empty,
+                    DecodeHtml(
+                        page.Acf?.HeroDescription
+                        ?? string.Empty
+                    ),
 
                 HeroImageUrl =
-                    heroMedia?.SourceUrl ??
-                    embeddedImage?.SourceUrl,
+                    heroMedia?.SourceUrl
+                    ?? embeddedImage?.SourceUrl,
 
                 HeroImageAlt =
-                    heroMedia?.AltText ??
-                    embeddedImage?.AltText ??
-                    string.Empty,
+                    heroMedia?.AltText
+                    ?? embeddedImage?.AltText
+                    ?? string.Empty,
 
                 HeroButtonText =
-                    page.Acf?.HeroButtonText,
+                    string.IsNullOrWhiteSpace(
+                        page.Acf?.HeroButtonText
+                    )
+                        ? null
+                        : DecodeHtml(
+                            page.Acf.HeroButtonText
+                        ),
 
                 HeroButtonUrl =
-                    page.Acf?.HeroButtonUrl
+                    string.IsNullOrWhiteSpace(
+                        page.Acf?.HeroButtonUrl
+                    )
+                        ? null
+                        : page.Acf.HeroButtonUrl
             };
         }
         catch (HttpRequestException exception)
@@ -182,13 +251,24 @@ public sealed class WordPressService
 
             throw;
         }
+        catch (NotSupportedException exception)
+        {
+            _logger.LogError(
+                exception,
+                "WordPress returned an unsupported home page response."
+            );
+
+            throw;
+        }
     }
 
     private static PostSummary MapPostSummary(
         WordPressPost post)
     {
         var featuredImage =
-            post.Embedded?.FeaturedMedia?.FirstOrDefault();
+            post.Embedded?
+                .FeaturedMedia?
+                .FirstOrDefault();
 
         var category =
             post.Embedded?
@@ -202,11 +282,17 @@ public sealed class WordPressService
         {
             Id = post.Id,
             Slug = post.Slug,
-            Title = DecodeHtml(post.Title.Rendered),
-            Description = CleanExcerpt(post.Excerpt.Rendered),
+            Title = DecodeHtml(
+                post.Title.Rendered
+            ),
+            Description = CleanExcerpt(
+                post.Excerpt.Rendered
+            ),
             PublishedAt = post.Date,
             ImageUrl = featuredImage?.SourceUrl,
-            ImageAlt = featuredImage?.AltText ?? string.Empty,
+            ImageAlt =
+                featuredImage?.AltText
+                ?? string.Empty,
             Category = DecodeHtml(category)
         };
     }
@@ -232,16 +318,18 @@ public sealed class WordPressService
         };
     }
 
-    private async Task<WordPressMedia?> GetWordPressMediaAsync(
-        int mediaId,
-        CancellationToken cancellationToken)
+    private async Task<WordPressMedia?>
+        GetWordPressMediaAsync(
+            int mediaId,
+            CancellationToken cancellationToken)
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<WordPressMedia>(
-                $"{WordPressApiUrl}/media/{mediaId}",
-                cancellationToken
-            );
+            return await _httpClient
+                .GetFromJsonAsync<WordPressMedia>(
+                    $"{_wordpressApiUrl}/media/{mediaId}",
+                    cancellationToken
+                );
         }
         catch (HttpRequestException exception)
         {
@@ -253,9 +341,20 @@ public sealed class WordPressService
 
             return null;
         }
+        catch (NotSupportedException exception)
+        {
+            _logger.LogWarning(
+                exception,
+                "WordPress returned an unsupported response for media {MediaId}.",
+                mediaId
+            );
+
+            return null;
+        }
     }
 
-    private static string CleanExcerpt(string value)
+    private static string CleanExcerpt(
+        string value)
     {
         var withoutTags = Regex.Replace(
             value,
@@ -264,8 +363,14 @@ public sealed class WordPressService
         );
 
         var withoutEllipsis = withoutTags
-            .Replace("[&hellip;]", string.Empty)
-            .Replace("[…]", string.Empty);
+            .Replace(
+                "[&hellip;]",
+                string.Empty
+            )
+            .Replace(
+                "[…]",
+                string.Empty
+            );
 
         var normalizedWhitespace = Regex.Replace(
             withoutEllipsis,
@@ -273,10 +378,13 @@ public sealed class WordPressService
             " "
         );
 
-        return DecodeHtml(normalizedWhitespace.Trim());
+        return DecodeHtml(
+            normalizedWhitespace.Trim()
+        );
     }
 
-    private static string DecodeHtml(string value)
+    private static string DecodeHtml(
+        string value)
     {
         return WebUtility.HtmlDecode(value);
     }

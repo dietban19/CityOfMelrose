@@ -32,6 +32,7 @@ public sealed class PostsController : ControllerBase
     {
         try
         {
+            Console.WriteLine("GEtting Posts");
             var posts =
                 await _wordPressService.GetPostsAsync(
                     cancellationToken

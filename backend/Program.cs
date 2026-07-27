@@ -2,22 +2,23 @@ using backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add controller-based API support.
 builder.Services.AddControllers();
 
-// Register WordPressService and provide its HttpClient.
 builder.Services.AddHttpClient<WordPressService>(client =>
 {
-    client.Timeout = TimeSpan.FromSeconds(15);
+    client.Timeout = TimeSpan.FromSeconds(30);
 });
 
-// Allow requests from the Angular development server.
+var frontendUrl =
+    builder.Configuration["FrontendUrl"]
+    ?? "http://localhost:4200";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AngularDevelopment", policy =>
+    options.AddPolicy("Frontend", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200")
+            .WithOrigins(frontendUrl)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -25,10 +26,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Enable the Angular CORS policy.
-app.UseCors("AngularDevelopment");
+app.UseCors("Frontend");
 
-// Map all controller endpoints.
 app.MapControllers();
+
+app.MapGet("/", () => new
+{
+    application = "City of Melrose API",
+    status = "running"
+});
 
 app.Run();
