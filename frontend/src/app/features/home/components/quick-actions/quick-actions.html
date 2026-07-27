@@ -1,1 +1,66 @@
-<p>quick-actions works!</p>
+<section class="quick-actions" aria-labelledby="quick-actions-heading">
+  <div class="quick-actions__inner">
+    <header class="quick-actions__header">
+      <h2 id="quick-actions-heading">Quick actions</h2>
+
+      <p>Complete common City of Melrose tasks online.</p>
+    </header>
+
+    <div class="quick-actions__grid">
+      @for (action of actions; track action.title) {
+        <a [routerLink]="action.route" class="quick-action">
+          <span class="quick-action__icon" aria-hidden="true">
+            @switch (action.icon) {
+              @case ('payment') {
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="1"></rect>
+                  <path d="M3 9h18"></path>
+                  <path d="M7 15h4"></path>
+                </svg>
+              }
+
+              @case ('report') {
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3 2.5 20h19L12 3Z"></path>
+                  <path d="M12 9v5"></path>
+                  <path d="M12 17.5v.5"></path>
+                </svg>
+              }
+
+              @case ('calendar') {
+                <svg viewBox="0 0 24 24">
+                  <rect x="4" y="5" width="16" height="15" rx="1"></rect>
+                  <path d="M8 3v4"></path>
+                  <path d="M16 3v4"></path>
+                  <path d="M4 9h16"></path>
+                  <path d="m8 14 2 2 5-5"></path>
+                </svg>
+              }
+
+              @case ('permit') {
+                <svg viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7V3Z"></path>
+                  <path d="M14 3v5h5"></path>
+                  <path d="M10 12h5"></path>
+                  <path d="M10 16h5"></path>
+                </svg>
+              }
+            }
+          </span>
+
+          <span class="quick-action__content">
+            <span class="quick-action__title">
+              {{ action.title }}
+            </span>
+
+            <span class="quick-action__description">
+              {{ action.description }}
+            </span>
+          </span>
+
+          <span class="quick-action__arrow" aria-hidden="true"> › </span>
+        </a>
+      }
+    </div>
+  </div>
+</section>

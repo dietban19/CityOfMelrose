@@ -1,0 +1,151 @@
+:host {
+  display: block;
+}
+
+.about-melrose {
+  padding: 4.5rem 1.5rem;
+  background: #ffffff;
+}
+
+.about-melrose__inner {
+  display: grid;
+  width: min(100%, 1180px);
+  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: center;
+  margin-inline: auto;
+}
+
+.about-melrose__label {
+  margin: 0 0 0.4rem;
+  color: #4e8f43;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-melrose h2 {
+  position: relative;
+  margin: 0;
+  padding-bottom: 0.75rem;
+  color: #263943;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.about-melrose h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 4rem;
+  height: 4px;
+  background: #4e8f43;
+  content: '';
+}
+
+.about-melrose__lead {
+  margin: 1.25rem 0 1rem;
+  color: #344a54;
+  font-size: 1.15rem;
+  line-height: 1.65;
+}
+
+.about-melrose__content > p:not(.about-melrose__label) {
+  max-width: 42rem;
+  color: #52646c;
+  line-height: 1.65;
+}
+
+.about-melrose__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.about-melrose__primary-link,
+.about-melrose__secondary-link {
+  display: inline-block;
+  padding: 0.75rem 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.about-melrose__primary-link {
+  border: 2px solid #0b66a3;
+  color: #ffffff;
+  background: #0b66a3;
+}
+
+.about-melrose__primary-link:hover {
+  background: #084f7e;
+}
+
+.about-melrose__secondary-link {
+  border: 2px solid #0b66a3;
+  color: #0b66a3;
+  background: #ffffff;
+}
+
+.about-melrose__secondary-link:hover {
+  background: #edf4f8;
+}
+
+.about-melrose__statistics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0;
+  border-top: 1px solid #c9d0d3;
+  border-left: 1px solid #c9d0d3;
+}
+
+.statistic {
+  padding: 1.75rem;
+  border-right: 1px solid #c9d0d3;
+  border-bottom: 1px solid #c9d0d3;
+}
+
+.statistic dd {
+  margin: 0;
+  color: #0b66a3;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.statistic dt {
+  margin-top: 0.4rem;
+  color: #52646c;
+  font-size: 0.9rem;
+}
+
+a:focus-visible {
+  outline: 3px solid #f5b400;
+  outline-offset: 3px;
+}
+
+@media (max-width: 800px) {
+  .about-melrose__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-melrose {
+    padding: 3rem 1rem;
+  }
+
+  .about-melrose__statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .about-melrose__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .about-melrose__primary-link,
+  .about-melrose__secondary-link {
+    text-align: center;
+  }
+}

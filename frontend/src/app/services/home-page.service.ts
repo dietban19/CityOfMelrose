@@ -21,11 +21,9 @@ export interface HomePageContent {
 export class HomePageService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:3000/api';
+  private readonly apiUrl = 'http://localhost:5048/api';
 
   getHomePage(): Observable<HomePageContent> {
-    return this.http.get<HomePageContent>(
-      `${this.apiUrl}/pages/home`,
-    );
+    return this.http.get<HomePageContent>(`${this.apiUrl}/pages/home`);
   }
 }

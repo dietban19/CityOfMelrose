@@ -4,9 +4,42 @@ node_modules/
 # Angular
 frontend/.angular/
 frontend/dist/
+frontend/.cache/
 
-# NestJS
-backend/dist/
+# ASP.NET Core / .NET
+backend/bin/
+backend/obj/
+backend/out/
+backend/TestResults/
+backend/*.user
+backend/*.suo
+backend/*.userosscache
+backend/*.sln.docstates
+
+# Visual Studio
+.vs/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# ASP.NET development settings
+backend/appsettings.Development.json
+backend/appsettings.Local.json
+
+# Certificates and secrets
+*.pfx
+*.p12
+*.cer
+*.key
+*.pem
+secrets.json
 
 # Environment files
 .env
@@ -15,8 +48,20 @@ backend/dist/
 
 # Logs
 *.log
+logs/
 
-# Editors and operating systems
+# Test and coverage output
+coverage/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Editors
 .vscode/
-.idea/
+*.code-workspace
+
+# Operating systems
 .DS_Store
+Thumbs.db
+info.md

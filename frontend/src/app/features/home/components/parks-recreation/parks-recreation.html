@@ -1,1 +1,39 @@
-<p>parks-recreation works!</p>
+<section class="parks-recreation" aria-labelledby="parks-heading">
+  <div class="parks-recreation__inner">
+    <div class="parks-recreation__image">
+      <img
+        src="/images/parks/riverside-park.jpg"
+        alt="Residents walking and cycling through Riverside Park in Melrose"
+      />
+    </div>
+
+    <div class="parks-recreation__content">
+      <p class="parks-recreation__label">Explore Melrose</p>
+
+      <h2 id="parks-heading">Parks and recreation</h2>
+
+      <p class="parks-recreation__intro">
+        Discover programs, facilities, parks and outdoor spaces for residents of all ages and
+        abilities.
+      </p>
+
+      <div class="parks-recreation__links">
+        @for (link of links; track link.title) {
+          <a [routerLink]="link.route" class="parks-link">
+            <span>
+              <span class="parks-link__title">
+                {{ link.title }}
+              </span>
+
+              <span class="parks-link__description">
+                {{ link.description }}
+              </span>
+            </span>
+
+            <span class="parks-link__arrow" aria-hidden="true"> › </span>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</section>

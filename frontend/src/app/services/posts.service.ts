@@ -10,7 +10,7 @@ import { Post } from '../models/post.model';
 export class PostsService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:3000/api/posts';
+  private readonly apiUrl = 'http://localhost:5048/api/posts';
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl);

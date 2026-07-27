@@ -1,1 +1,51 @@
-<p>major-projects works!</p>
+<section class="major-projects" aria-labelledby="projects-heading">
+  <div class="major-projects__inner">
+    <header class="major-projects__header">
+      <div>
+        <p class="major-projects__label">Building Melrose</p>
+        <h2 id="projects-heading">Major projects</h2>
+
+        <p class="major-projects__intro">
+          Learn about major infrastructure and community projects taking place across the city.
+        </p>
+      </div>
+
+      <a routerLink="/city-hall/projects" class="major-projects__all-link"> View all projects </a>
+    </header>
+
+    <div class="major-projects__grid">
+      @for (project of projects; track project.id) {
+        <article class="project-card">
+          <a
+            [routerLink]="project.route"
+            class="project-card__image-link"
+            [attr.aria-label]="'View ' + project.title"
+          >
+            <img class="project-card__image" [src]="project.imageUrl" [alt]="project.imageAlt" />
+          </a>
+
+          <div class="project-card__content">
+            <p class="project-card__status">
+              {{ project.status }}
+            </p>
+
+            <h3>
+              <a [routerLink]="project.route">
+                {{ project.title }}
+              </a>
+            </h3>
+
+            <p class="project-card__description">
+              {{ project.description }}
+            </p>
+
+            <a [routerLink]="project.route" class="project-card__link">
+              View project details
+              <span aria-hidden="true">›</span>
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
