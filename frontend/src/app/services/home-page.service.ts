@@ -1,6 +1,8 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { environment } from '../../../../environments/environment';
 
 export interface HomePageContent {
   id: number;
@@ -19,9 +21,9 @@ export interface HomePageContent {
   providedIn: 'root',
 })
 export class HomePageService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:5048/api';
+  private readonly apiUrl = environment.apiUrl;
 
   getHomePage(): Observable<HomePageContent> {
     return this.http.get<HomePageContent>(`${this.apiUrl}/pages/home`);
