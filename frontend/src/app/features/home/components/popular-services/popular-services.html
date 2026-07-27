@@ -7,7 +7,7 @@
     </div>
 
     <div class="popular-services__list">
-      @for (service of services; track service.title) {
+      @for (service of services; track service.key) {
         <a [routerLink]="service.link" class="service-link" (click)="trackServiceClick(service)">
           <span class="service-link__icon" aria-hidden="true">
             @switch (service.icon) {
