@@ -1,1 +1,69 @@
-<p>events-section works!</p>
+<section class="events-section" aria-labelledby="events-heading">
+  <div class="events-section__inner">
+    <header class="events-section__header">
+      <div>
+        <p class="events-section__label">What’s happening</p>
+        <h2 id="events-heading">Upcoming events</h2>
+      </div>
+
+      <a routerLink="/parks-community/events" class="events-section__all-link"> View all events </a>
+    </header>
+
+    <div class="events-list">
+      @for (event of events; track event.id) {
+        <article class="event">
+          <div class="event__date" aria-hidden="true">
+            <span class="event__month">
+              {{ event.startDate | date: 'MMM' }}
+            </span>
+
+            <span class="event__day">
+              {{ event.startDate | date: 'd' }}
+            </span>
+          </div>
+
+          <div class="event__content">
+            <h3>
+              <a [routerLink]="event.route">
+                {{ event.title }}
+              </a>
+            </h3>
+
+            <p class="event__description">
+              {{ event.description }}
+            </p>
+
+            <dl class="event__details">
+              <div>
+                <dt>Date</dt>
+                <dd>
+                  <time [attr.datetime]="event.startDate">
+                    {{ event.startDate | date: 'EEEE, MMMM d, y' }}
+                  </time>
+                </dd>
+              </div>
+
+              <div>
+                <dt>Time</dt>
+                <dd>{{ event.time }}</dd>
+              </div>
+
+              <div>
+                <dt>Location</dt>
+                <dd>{{ event.location }}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <a
+            [routerLink]="event.route"
+            class="event__arrow"
+            [attr.aria-label]="'View ' + event.title"
+          >
+            <span aria-hidden="true">›</span>
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>

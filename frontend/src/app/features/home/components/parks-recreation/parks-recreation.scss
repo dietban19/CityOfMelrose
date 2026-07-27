@@ -1,0 +1,135 @@
+:host {
+  display: block;
+}
+
+.parks-recreation {
+  background: #eef3ed;
+}
+
+.parks-recreation__inner {
+  display: grid;
+  width: min(100%, 1440px);
+  min-height: 35rem;
+  grid-template-columns: 1fr 1fr;
+  margin-inline: auto;
+}
+
+.parks-recreation__image {
+  min-height: 30rem;
+}
+
+.parks-recreation__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.parks-recreation__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 7vw, 6rem);
+}
+
+.parks-recreation__label {
+  margin: 0 0 0.4rem;
+  color: #4e8f43;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.parks-recreation h2 {
+  position: relative;
+  margin: 0;
+  padding-bottom: 0.75rem;
+  color: #263943;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+.parks-recreation h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 4rem;
+  height: 4px;
+  background: #4e8f43;
+  content: '';
+}
+
+.parks-recreation__intro {
+  max-width: 37rem;
+  margin: 1rem 0 1.75rem;
+  color: #465a63;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.parks-recreation__links {
+  border-top: 1px solid #bfc9bd;
+}
+
+.parks-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid #bfc9bd;
+  color: #0b66a3;
+  text-decoration: none;
+}
+
+.parks-link:hover .parks-link__title {
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
+}
+
+.parks-link__title,
+.parks-link__description {
+  display: block;
+}
+
+.parks-link__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.parks-link__description {
+  margin-top: 0.25rem;
+  color: #50636b;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.parks-link__arrow {
+  font-size: 1.8rem;
+}
+
+a:focus-visible {
+  outline: 3px solid #f5b400;
+  outline-offset: 3px;
+}
+
+@media (max-width: 800px) {
+  .parks-recreation__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .parks-recreation__image {
+    min-height: 21rem;
+  }
+
+  .parks-recreation__content {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .parks-recreation__content {
+    padding-inline: 1rem;
+  }
+}

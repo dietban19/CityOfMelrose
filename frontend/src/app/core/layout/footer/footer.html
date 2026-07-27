@@ -1,1 +1,70 @@
-<p>footer works!</p>
+<footer class="site-footer">
+  <div class="site-footer__main">
+    <div class="site-footer__inner">
+      <div class="site-footer__identity">
+        <a routerLink="/" class="site-footer__logo">
+          <img src="/images/city-of-melrose-logo.svg" alt="City of Melrose" />
+        </a>
+
+        <p>
+          The City of Melrose is committed to providing accessible, reliable and responsive
+          municipal services.
+        </p>
+
+        <address>
+          <strong>Melrose City Hall</strong><br />
+          100 Civic Square<br />
+          Melrose, Alberta<br />
+          Canada
+        </address>
+
+        <p>
+          <a href="tel:+14035550100">403-555-0100</a><br />
+          <a href="mailto:info@melrose.ca">info&#64;melrose.ca</a>
+        </p>
+      </div>
+
+      <nav class="site-footer__navigation" aria-label="Footer navigation">
+        @for (group of linkGroups; track group.heading) {
+          <div class="site-footer__group">
+            <h2>{{ group.heading }}</h2>
+
+            <ul>
+              @for (link of group.links; track link.label) {
+                <li>
+                  <a [routerLink]="link.route">
+                    {{ link.label }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </nav>
+    </div>
+  </div>
+
+  <div class="site-footer__utility">
+    <div class="site-footer__utility-inner">
+      <ul>
+        <li>
+          <a routerLink="/privacy">Privacy</a>
+        </li>
+
+        <li>
+          <a routerLink="/accessibility">Accessibility</a>
+        </li>
+
+        <li>
+          <a routerLink="/terms-of-use">Terms of use</a>
+        </li>
+
+        <li>
+          <a routerLink="/contact">Contact us</a>
+        </li>
+      </ul>
+
+      <p>© {{ currentYear }} City of Melrose</p>
+    </div>
+  </div>
+</footer>

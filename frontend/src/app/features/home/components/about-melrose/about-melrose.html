@@ -1,1 +1,34 @@
-<p>about-melrose works!</p>
+<section class="about-melrose" aria-labelledby="about-melrose-heading">
+  <div class="about-melrose__inner">
+    <div class="about-melrose__content">
+      <p class="about-melrose__label">Our city</p>
+
+      <h2 id="about-melrose-heading">About Melrose</h2>
+
+      <p class="about-melrose__lead">
+        Melrose is a growing, welcoming city known for its connected neighbourhoods, river valley,
+        public spaces and strong local economy.
+      </p>
+
+      <p>
+        The City of Melrose provides municipal services, maintains public infrastructure and works
+        with residents to build a safe, accessible and sustainable community.
+      </p>
+
+      <div class="about-melrose__actions">
+        <a routerLink="/about-melrose" class="about-melrose__primary-link"> Learn about Melrose </a>
+
+        <a routerLink="/city-hall" class="about-melrose__secondary-link"> City government </a>
+      </div>
+    </div>
+
+    <dl class="about-melrose__statistics">
+      @for (statistic of statistics; track statistic.label) {
+        <div class="statistic">
+          <dd>{{ statistic.value }}</dd>
+          <dt>{{ statistic.label }}</dt>
+        </div>
+      }
+    </dl>
+  </div>
+</section>
