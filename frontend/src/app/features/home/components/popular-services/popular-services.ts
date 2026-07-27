@@ -1,13 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
-type ServiceIcon =
-  | 'recreation'
-  | 'waste'
-  | 'transit'
-  | 'property'
-  | 'roads'
-  | 'calendar';
+import { AnalyticsService } from '../../../../core/services/analytics';
+type ServiceIcon = 'recreation' | 'waste' | 'transit' | 'property' | 'roads' | 'calendar';
 
 interface PopularService {
   title: string;
@@ -22,6 +16,7 @@ interface PopularService {
   styleUrl: './popular-services.scss',
 })
 export class PopularServices {
+  private readonly analyticsService: AnalyticsService = inject(AnalyticsService);
   readonly services: PopularService[] = [
     {
       title: 'Recreation programs',
@@ -54,4 +49,7 @@ export class PopularServices {
       icon: 'calendar',
     },
   ];
+  trackServiceClick(service: PopularService): void {
+    this.analyticsService.trackServiceClick(service.link, service.title, service.link);
+  }
 }

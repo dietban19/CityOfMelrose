@@ -3,14 +3,12 @@
     <div class="popular-services__heading-row">
       <h2 id="popular-services-heading">Popular services</h2>
 
-      <a routerLink="/services" class="popular-services__all-link">
-        View all services
-      </a>
+      <a routerLink="/services" class="popular-services__all-link"> View all services </a>
     </div>
 
     <div class="popular-services__list">
       @for (service of services; track service.title) {
-        <a [routerLink]="service.link" class="service-link">
+        <a [routerLink]="service.link" class="service-link" (click)="trackServiceClick(service)">
           <span class="service-link__icon" aria-hidden="true">
             @switch (service.icon) {
               @case ('recreation') {
@@ -80,9 +78,7 @@
             {{ service.title }}
           </span>
 
-          <span class="service-link__arrow" aria-hidden="true">
-            ›
-          </span>
+          <span class="service-link__arrow" aria-hidden="true"> › </span>
         </a>
       }
     </div>
